@@ -120,7 +120,7 @@ def MergeHSregion(hs_list,start_index=0):
              and non-HS region(light color)
 
 '''
-def PlotHSregion(resMax,gene,outputdir):
+def PlotHSregion(resMax,gene,outputdir, title): ##hh
     ## Read the HS region information from table file.
     df_hs = pd.read_csv(gene+'_Segments.csv')
     #print df_hs
@@ -143,7 +143,7 @@ def PlotHSregion(resMax,gene,outputdir):
         plt.bar(start + (end-start)/2, 0.6 ,width=end-start,bottom = 7.0,facecolor='darkred',alpha=0.3)
         #x = np.linspace(start+5,end-5);y = 0*x+3.5
 
-    df_hs.to_csv(outputdir+'/'+gene+'_CKHS_Regions.csv')
+    df_hs.to_csv(outputdir+'/'+title+'_'+gene+'_CKHS_Regions.csv') ##hh
     ## move the file recording HS regions into outputfir
     os.system('rm '+gene+'_Segments.csv')
 
@@ -495,7 +495,7 @@ def Visualization(gene,outputdir,exons_dic,sift_genome_dic,domain_genome_dic,ss_
     plt.xlim(-resMax/6,resMax*51/50)
     plt.xticks([i-i%10 for i in range(0,int(resMax),int(resMax/100)*10)])
     logging.info('Plotting HS regions...')
-    PlotHSregion(resMax,gene,outputdir)
+    PlotHSregion(resMax,gene,outputdir,title)
     logging.info('Plotting Exon regions...')
     PlotExons(resList,resMax)
     logging.info('Plotting conservation score...')
@@ -519,6 +519,6 @@ def Visualization(gene,outputdir,exons_dic,sift_genome_dic,domain_genome_dic,ss_
     #plt.xlabel('Residue location',fontsize=10)
     plt.tight_layout(h_pad=0)
     logging.info('Saving figures...')
-    plt.savefig(outputdir +'/Segmentfigure_'+gene+'.png')
+    plt.savefig(outputdir +'/'+title+"_"+'Segmentfigure_'+gene+'.png') ##hh
     logging.info('Finished!')
     plt.show()
